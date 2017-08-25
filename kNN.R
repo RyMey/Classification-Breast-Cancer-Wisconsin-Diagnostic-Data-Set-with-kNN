@@ -5,6 +5,7 @@
 # 1. Mempersiapkan data
 dt <- read.table("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data", sep = ',')
 dt <- dt[,-1] #menghilangkan fitur v1, karena isinya hanya ID
+prop.table(table(dt$V2))
 
 # 2. Split data
 dtClassB <- dt[which(dt$V2=='B'),]
