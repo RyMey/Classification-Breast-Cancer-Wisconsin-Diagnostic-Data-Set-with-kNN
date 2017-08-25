@@ -54,9 +54,9 @@ predictionLabels <- knn(train = trainingDt, test = testingDt, cl = trainingLabel
 # Tabel Hasil
 result <- table(predictionLabels,testingLabels)
 # Tabel Kebenaran
-truthMatrix <- matrix(c(round(105/111, digit = 2),round(6/111, digit = 2),
-                    round(2/59, digit = 2), round(57/59, digit = 2)), 
-                    ncol = 2, nrow = 2, byrow = TRUE)
+truthMatrix <- matrix(c(round(result[1,1]/(result[1,1]+result[1,2]), digit = 2),round(result[1,2]/(result[1,1]+result[1,2]), digit = 2),
+                        round(result[2,1]/(result[2,1]+result[2,2]), digit = 2), round(result[2,2]/(result[2,1]+result[2,2]), digit = 2)), 
+                      ncol = 2, nrow = 2, byrow = TRUE)
 colnames(truthMatrix) <- c("Actually B","Actually M")
 rownames(truthMatrix) <- c("Predict B","Predict M")
 truthMatrix <- as.table(truthMatrix)
