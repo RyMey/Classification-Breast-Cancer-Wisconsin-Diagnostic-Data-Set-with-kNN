@@ -59,22 +59,16 @@ predictionLabels <- knn(train = trainingDtOver, test = testingDt, cl = trainingD
 
 # 7. Evaluasi
 # Tabel Hasil
-result <- table(predictionLabels,testingLabels)
-# Tabel Kebenaran
-truthMatrix <- matrix(c(round(result[1,1]/(result[1,1]+result[1,2]), digit = 2),round(result[1,2]/(result[1,1]+result[1,2]), digit = 2),
-                        round(result[2,1]/(result[2,1]+result[2,2]), digit = 2), round(result[2,2]/(result[2,1]+result[2,2]), digit = 2)), 
-                      ncol = 2, nrow = 2, byrow = TRUE)
-colnames(truthMatrix) <- c("Actually B","Actually M")
-rownames(truthMatrix) <- c("Predict B","Predict M")
-truthMatrix <- as.table(truthMatrix)
-# Persentase Kebenaran dan Persentase Error
-percentageOfTruth <- (truthMatrix[1,1] + truthMatrix [2,2]) / (truthMatrix[1,1] + truthMatrix[1,2] + truthMatrix[2,1] +truthMatrix[2,2])
-percentageOfError <- (truthMatrix[1,2] + truthMatrix [2,1]) / (truthMatrix[1,1] + truthMatrix[1,2] + truthMatrix[2,1] +truthMatrix[2,2])
+confusionMatrix <- table(predictionLabels,testingLabels)
+accuracy <- (truthMatrix[1,1] + truthMatrix [2,2]) / (truthMatrix[1,1] + truthMatrix[1,2] + truthMatrix[2,1] +truthMatrix[2,2])
+recall <- (truthMatrix[1,1]) / (truthMatrix[1,1] + truthMatrix[1,2])
+specificity <- (truthMatrix [2,2]) / (truthMatrix[2,1] +truthMatrix[2,2])
+precision <- (truthMatrix[1,1]) / (truthMatrix[1,1] + truthMatrix[2,1])
 # List Data Evaluasi
-percentageList <- list(result = result, truthMatrixInPercent = truthMatrix , percentageOfTruth = percentageOfTruth, percentageOfError = percentageOfError)
-percentageList
+evaluasiList <- list(confusionMatrix = confusionMatrix, accuracy = accuracy , recall = recall, specificity = specificity, precision = precision)
+evaluasiList
 
-# 7.Beberapa Plot
+# 8.Beberapa Plot
 library(lattice)
 xyplot(V10 ~ V28, dt, groups = dt$V2, pch= 20)
 xyplot(V7 ~ V26, dt, groups = dt$V2, pch= 20)
