@@ -17,8 +17,8 @@ summary(dt)
 normalize <- function(x) {
   return ((x-min(x)) / (max(x) - min(x)))
 }
-normalizedDtB <- as.data.frame(lapply(dtClassB[2:31], normalize))
-normalizedDtM <- as.data.frame(lapply(dtClassM[2:31], normalize))
+normalizedDtB <- as.data.frame(lapply(dtClassB[,2:31], normalize))
+normalizedDtM <- as.data.frame(lapply(dtClassM[,2:31], normalize))
 
 # 5. Ambil training data (70%) dan testing data (30%)
 # Ambil 70% data dari kelas B
@@ -54,16 +54,16 @@ trainingDtOver <- trainingDtOver[,-1]
 
 # 6.Membuat prediksi dengan kNN
 library(class)
-startK <- ceiling(sqrt(nrow(trainingDt))) - 1
+startK <- ceiling(sqrt(nrow(trainingDt)))-3
 predictionLabels <- knn(train = trainingDtOver, test = testingDt, cl = trainingDtOverLabel, k = startK)
 
 # 7. Evaluasi
 # Tabel Hasil
 confusionMatrix <- table(predictionLabels,testingLabels)
-accuracy <- (truthMatrix[1,1] + truthMatrix [2,2]) / (truthMatrix[1,1] + truthMatrix[1,2] + truthMatrix[2,1] +truthMatrix[2,2])
-recall <- (truthMatrix[1,1]) / (truthMatrix[1,1] + truthMatrix[1,2])
-specificity <- (truthMatrix [2,2]) / (truthMatrix[2,1] +truthMatrix[2,2])
-precision <- (truthMatrix[1,1]) / (truthMatrix[1,1] + truthMatrix[2,1])
+accuracy <- (confusionMatrix[1,1] + confusionMatrix [2,2]) / (confusionMatrix[1,1] + confusionMatrix[1,2] + confusionMatrix[2,1] +confusionMatrix[2,2])
+recall <- (confusionMatrix[1,1]) / (confusionMatrix[1,1] + confusionMatrix[1,2])
+specificity <- (confusionMatrix [2,2]) / (confusionMatrix[2,1] +confusionMatrix[2,2])
+precision <- (confusionMatrix[1,1]) / (confusionMatrix[1,1] + confusionMatrix[2,1])
 # List Data Evaluasi
 evaluasiList <- list(confusionMatrix = confusionMatrix, accuracy = accuracy , recall = recall, specificity = specificity, precision = precision)
 evaluasiList
