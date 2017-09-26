@@ -20,6 +20,8 @@ normalize <- function(x) {
 }
 normalizedDtB <- as.data.frame(lapply(dtClassB[2:31], normalize))
 normalizedDtM <- as.data.frame(lapply(dtClassM[2:31], normalize))
+#normalizedDtB<- dtClassB[2:31] #tanpa normalisasi
+#normalizedDtM<-dtClassM[2:31] #tanpa normalisasi
 
 # 5. Ambil training data (70%) dan testing data (30%)
 # Ambil 70% data dari kelas B
